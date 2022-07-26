@@ -1,26 +1,28 @@
 package web.service;
 
 import org.springframework.stereotype.Component;
-import web.dao.CarDaoImpl;
+import web.dao.CarDao;
 import web.model.Car;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 public class CarServiceImpl implements CarService {
-    private CarDaoImpl carDaoImpl;
+    private final CarDao carDao;
 
-    public CarServiceImpl(CarDaoImpl carDaoImpl) {
-        this.carDaoImpl = carDaoImpl;
+    public CarServiceImpl(CarDao carDao) {
+        this.carDao = carDao;
     }
 
     public List<Car> getSomeCars(int countCars) {
-        return carDaoImpl.getAllCars().stream().limit(countCars).collect(Collectors.toList());
+        return carDao.getAllCars()
+                .stream()
+                .limit(countCars)
+                .collect(Collectors.toList());
     }
 
     public List<Car> getAllCars() {
-        return carDaoImpl.getAllCars();
+        return carDao.getAllCars();
     }
 }
